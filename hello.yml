@@ -1,0 +1,7 @@
+---
+- name: Exemplo de Hello World em Ansible
+  hosts: all
+
+  tasks:
+    - debug: 
+        msg: "Hello World!"
