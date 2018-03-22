@@ -1,0 +1,6 @@
+---
+- name: Usando role de deploy de aplicação em JBoss EAP
+  hosts: all
+
+  roles:
+    - jboss_deploy

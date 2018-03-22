@@ -1,0 +1,6 @@
+---
+- name: Instalação de JBoss EAP
+  hosts: all
+
+  roles:
+    - jboss_eap
