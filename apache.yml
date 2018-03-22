@@ -1,0 +1,18 @@
+---
+- name: Configuração de Apache em Hosts
+  hosts: all
+  vars:
+    apache: httpd
+
+  tasks:
+    - name: Instalando Apache em hosts
+      yum:
+        name: "{{apache}}"
+        state: present
+
+    - name: Start e enable em Apache
+      service:
+        name: "{{apache}}"
+        state: started
+        enabled: true
+
