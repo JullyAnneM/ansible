@@ -22,7 +22,7 @@
 
   - name: Descompactando arquivo Java em host
     unarchive:
-      src: jdk-8u161-linux-x64.tar.gz
+      src: /opt/jdk-8u161-linux-x64.tar.gz
       dest: /opt
 
   - name: Criando grupo JBoss
