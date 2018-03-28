@@ -2,6 +2,7 @@
 - hosts: 192.168.122.79
   become: true
   become_user: root
+  become_method: sudo
 
   tasks:
     - name: Parando apache
