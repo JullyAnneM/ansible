@@ -2,5 +2,87 @@
 - name: Instalação de JBoss EAP
   hosts: all
 
-  roles:
-    - jboss_eap
+  tasks:
+  - name: Checando se diretório /opt existe
+    stat:
+    path: /opt
+  register: check
+
+  - name: Criação de diretório para instalação JBoss EAP
+    file:
+      name: /opt
+      state: directory
+    when: check.stat.exists == false
+
+  - name: Descompactando arquivo JBoss EAP via zip
+    unarchive:
+      src: "{{jboss_eap_zip}}"
+      dest: /opt/
+    ignore_errors: true
+
+  - name: Descompactando arquivo Java em host
+    unarchive:
+      src: jdk-8u161-linux-x64.tar.gz
+      dest: /opt
+
+  - name: Criando grupo JBoss
+    group:
+      name: jboss
+
+  - name: Criando usuário JBoss EAP
+    user:
+      name: jboss
+      group: jboss
+      state: present
+      shell: /bin/bash
+      home: /opt/jboss-eap-7.0
+
+  - name: Mudando permissões para diretório jboss-eap-7.0 e arquivos filhos
+    file:
+      path: /opt/jboss-eap-7.0
+      owner: jboss
+      group: jboss
+      recurse: yes
+
+  - name: Instalando Java 8 no host
+    shell: alternatives --install /usr/bin/java java /opt/jdk1.8.0_161/bin/java 2
+
+  - name: Incluindo variáveis de ambiente em ~/.bashrc
+    lineinfile:
+      path: ~/.bashrc
+      line: >
+        export JAVA_HOME=/opt/jdk1.8.0_161
+        export JRE_HOME=/opt/jdk1.8.0_161/jre
+        export PATH=$PATH:/opt/jdk1.8.0_161/bin:/opt/jdk1.8.0_161/jre/bin
+      state: present
+
+  - name: Sobrescrevendo arquivo jboss-eap.conf
+    copy:
+      src: jboss-eap-template.conf
+      dest: /opt/jboss-eap-7.0/bin/init.d/jboss-eap.conf
+      force: true
+      mode: 0755
+
+  - name: Copia de arquivos para seus respectivos lugares
+    copy:
+      src: "{{item.src}}"
+      dest: "{{item.dest}}/{{item.name}}"
+      remote_src: true
+      mode: 0755
+    with_items: "{{jboss_eap_init_d}}"
+
+  - name: Arrumando standalone.xml
+    template:
+      src: standalone.j2
+      dest: /opt/jboss-eap-7.0/standalone/configuration/standalone.xml
+      force: yes
+
+  - name: Reload de daemon
+    shell: systemctl daemon-reload
+
+  - name: Start e enable em JBoss EAP 2
+    service:
+      name: jboss-eap
+      state: started
+      enabled: true
+    ignore_errors: true
