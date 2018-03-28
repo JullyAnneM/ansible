@@ -10,7 +10,7 @@
 
     - name: fetch testing.txt
       fetch: 
-        dest: /root/
+        dest: /etc/testing
         src: /etc/testing/testing.txt 
         flat: yes
       notify: restart_apache
