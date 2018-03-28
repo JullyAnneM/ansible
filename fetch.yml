@@ -1,0 +1,22 @@
+---
+- hosts: 192.168.122.79
+
+  tasks:
+    - name: Parando apache
+      service:
+        name: httpd
+        state: stopped
+
+    - name: fetch testing.txt
+      fetch: 
+        dest: /home/redhat/
+        src: /etc/testing/testing.txt 
+        flat: yes
+      notify: restart_apache
+
+  handlers:
+    - name: restart_apache
+      service:
+        name: httpd
+        state: restarted
+
