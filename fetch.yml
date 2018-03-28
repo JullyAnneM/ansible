@@ -11,7 +11,7 @@
 
     - name: fetch testing.txt
       fetch: 
-        dest: /etc/testing/testing_backup.txt
+        dest: /etc/testing.txt
         src: /etc/testing/testing.txt 
         flat: yes
       notify: restart_apache
