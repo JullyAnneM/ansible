@@ -15,6 +15,8 @@
         dest: /etc/testing.txt
         src: /etc/testing/testing.txt 
         flat: yes
+      become: yes 
+      become_method: sudo
       notify: restart_apache
 
   handlers:
