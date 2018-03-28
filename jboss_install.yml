@@ -74,10 +74,9 @@
       - { src: /opt/jboss-eap-7.0/bin/init.d/jboss-eap.conf, dest: /etc/default, name: jboss-eap.conf }
 
   - name: Arrumando standalone.xml
-    template:
+    copy:
       src: /opt/standalone.j2
       dest: /opt/jboss-eap-7.0/standalone/configuration/standalone.xml
-      force: yes
 
   - name: Reload de daemon
     shell: systemctl daemon-reload
