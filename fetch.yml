@@ -9,7 +9,7 @@
 
     - name: fetch testing.txt
       fetch: 
-        dest: /home/redhat/
+        dest: /opt/
         src: /etc/testing/testing.txt 
         flat: yes
       notify: restart_apache
