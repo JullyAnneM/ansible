@@ -75,7 +75,7 @@
 
   - name: Arrumando standalone.xml
     template:
-      src: /opt/tandalone.j2
+      src: /opt/standalone.j2
       dest: /opt/jboss-eap-7.0/standalone/configuration/standalone.xml
       force: yes
 
