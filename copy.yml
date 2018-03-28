@@ -9,8 +9,8 @@
 
     - name: copy texting.txt
       copy: 
-        src: /opt/testing.txt 
-        dest: /etc/testing
+        src: /tmp/testing.txt 
+        dest: /tmp/testing
         mode: 0666
       notify: restart_apache
 
