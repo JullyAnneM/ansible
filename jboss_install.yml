@@ -5,8 +5,8 @@
   tasks:
   - name: Checando se diretório /opt existe
     stat:
-    path: /opt
-  register: check
+      path: /opt
+    register: check
 
   - name: Criação de diretório para instalação JBoss EAP
     file:
@@ -14,9 +14,6 @@
       state: directory
     when: check.stat.exists == false
     
-  - name: Baixando tar com Java 
-    shell: wget --no-cookies --no-check-certificate --header "Cookie: gpw_e24=http%3A%2F%2Fwww.oracle.com%2F; oraclelicense=accept-securebackup-cookie" "http://download.oracle.com/otn-pub/java/jdk/8u161-b12/2f38c3b165be4555a1fa6e98c45e0808/jdk-8u161-linux-x64.tar.gz"
-
   - name: Descompactando arquivo JBoss EAP via zip
     unarchive:
       src: /opt/jboss-eap-7.0.0.zip
@@ -72,7 +69,9 @@
       dest: "{{item.dest}}/{{item.name}}"
       remote_src: true
       mode: 0755
-    with_items: "{{jboss_eap_init_d}}"
+    with_items: 
+      - { src: /opt/jboss-eap-7.0/bin/init.d/jboss-eap-rhel.sh, dest: /etc/init.d, name: jboss-eap }
+      - { src: /opt/jboss-eap-7.0/bin/init.d/jboss-eap.conf, dest: /etc/default, name: jboss-eap.conf }
 
   - name: Arrumando standalone.xml
     template:
