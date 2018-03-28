@@ -1,8 +1,5 @@
 ---
 - hosts: 192.168.122.79
-  become: true
-  become_user: root
-  become_method: sudo
 
   tasks:
     - name: Parando apache
@@ -15,8 +12,6 @@
         dest: /etc/testing.txt
         src: /etc/testing/testing.txt 
         flat: yes
-      become: yes 
-      become_method: sudo
       notify: restart_apache
 
   handlers:
