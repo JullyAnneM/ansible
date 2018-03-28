@@ -58,7 +58,7 @@
 
   - name: Sobrescrevendo arquivo jboss-eap.conf
     copy:
-      src: jboss-eap-template.conf
+      src: /opt/jboss-eap-template.conf
       dest: /opt/jboss-eap-7.0/bin/init.d/jboss-eap.conf
       force: true
       mode: 0755
@@ -75,7 +75,7 @@
 
   - name: Arrumando standalone.xml
     template:
-      src: standalone.j2
+      src: /opt/tandalone.j2
       dest: /opt/jboss-eap-7.0/standalone/configuration/standalone.xml
       force: yes
 
