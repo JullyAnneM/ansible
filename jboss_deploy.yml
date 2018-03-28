@@ -5,5 +5,5 @@
   tasks:
   - name: Copiando arquivo para área de deploy
     copy:
-      src: ticket-monster.war
+      src: /opt/ticket-monster.war
       dest: /opt/jboss-eap-7.0/standalone/deployments
