@@ -4,7 +4,7 @@
 
   tasks:
   - name: Checando se diretório /opt existe
-  stat:
+    stat:
     path: /opt
   register: check
 
